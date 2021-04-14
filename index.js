@@ -10,7 +10,8 @@ module.exports = class Resolver {
 	}
 	resolve(url) {
 		const { node_path, mount, modules } = this;
-		const [moduleName, rest] = pathInfo(url.substring(mount.length + 1));
+		url = url.substring(mount.length);
+		const [moduleName, rest] = pathInfo(url);
 		let mod = modules[moduleName];
 
 		if (!mod) {
@@ -32,7 +33,7 @@ module.exports = class Resolver {
 			};
 		}
 
-		const objRest = Path.parse(Path.join('.', rest));
+		const objRest = Path.parse('./' + rest);
 		let redir = true;
 		let restBase = objRest.base;
 		if (restBase == "" || restBase == ".") {
@@ -61,7 +62,7 @@ module.exports = class Resolver {
 };
 
 function pathInfo(reqPath) {
-	const list = reqPath.split('/');
+	const list = reqPath.substr(1).split('/');
 	if (!list.length) return [null, null];
 	let name = list.shift();
 	if (name.charAt(0) == "@") name += "/" + list.shift();
