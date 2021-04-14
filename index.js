@@ -1,5 +1,6 @@
 const Path = require('path');
 const { readFileSync } = require('fs');
+const unwin = Path.sep == "\\" ? s => s.replace(/\\/g, "/") : s => s;
 
 module.exports = class Resolver {
 	constructor({ node_path, prefix }) {
@@ -49,10 +50,10 @@ module.exports = class Resolver {
 		let path;
 		if (redir) {
 			path = Path.join(moduleName, restDir, restBase);
-			url = Path.join(mount, path);
+			url = unwin(Path.join(mount, path));
 			path = Path.join(node_path, path);
 		} else {
-			url = '/' + Path.join(mod.name, rest);
+			url = '/' + unwin(Path.join(mod.name, rest));
 			path = Path.join(node_path, url);
 		}
 		return { redir, url, path };
