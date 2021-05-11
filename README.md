@@ -1,3 +1,6 @@
+
+*Deprecated* please use https://github.com/kapouer/webmodule/blob/main/resolve/README.md instead.
+
 Resolve Relative Import
 =======================
 
